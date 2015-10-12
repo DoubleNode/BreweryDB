@@ -156,9 +156,9 @@ withBreweryInfo:(BOOL)withBreweryInfo
  *
  *  @since 1.0.0
  */
-+ (void)fetchBeerWithId:(NSString *)styleId
-             parameters:(NSDictionary *)parameters
-                success:(void (^)(BDBBeer *beer))success
-                failure:(void (^)(NSError *error))failure;
++ (void)fetchStyleWithId:(NSString *)styleId
+              parameters:(NSDictionary *)parameters
+                 success:(void (^)(BDBBeer *beer))success
+                 failure:(void (^)(NSError *error))failure;
 
 @end
