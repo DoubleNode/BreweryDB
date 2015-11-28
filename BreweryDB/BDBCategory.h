@@ -1,5 +1,5 @@
 //
-//  BDBStyle.h
+//  BDBCategory.h
 //
 //  Copyright (c) 2013 Bradley David Bergeron
 //
@@ -22,27 +22,13 @@
 
 #import <Foundation/Foundation.h>
 
-@class BDBCategory;
 
 #pragma mark -
-@interface BDBStyle : NSObject
+@interface BDBCategory : NSObject
 
-@property (nonatomic, copy, readonly) NSString *styleId;
-@property (nonatomic) BDBCategory *category;
-@property (nonatomic) NSNumber *srmMax;
-@property (nonatomic) NSNumber *ibuMax;
-@property (nonatomic) NSNumber *srmMin;
-@property (nonatomic, copy) NSString *descriptionString;
-@property (nonatomic) NSNumber *fgMin;
-@property (nonatomic) NSNumber *ibuMin;
+@property (nonatomic, copy, readonly) NSString *categoryId;
 @property (nonatomic) NSNumber *createDate;
-@property (nonatomic) NSNumber *fgMax;
-@property (nonatomic) NSNumber *abvMax;
-@property (nonatomic) NSNumber *ogMin;
-@property (nonatomic) NSNumber *ogMax;
-@property (nonatomic) NSNumber *abvMin;
 @property (nonatomic, copy) NSString *name;
-@property (nonatomic) NSNumber *categoryId;
 
 @property (nonatomic, copy, readonly) NSString *status;
 

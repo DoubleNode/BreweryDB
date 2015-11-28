@@ -1,5 +1,5 @@
 //
-//  BDBStyle.m
+//  BDBCategory.m
 //
 //  Copyright (c) 2013 Bradley David Bergeron
 //
@@ -20,11 +20,11 @@
 //  IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 //  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-#import "BDBStyle.h"
+#import "BDBCategory.h"
 
 
 #pragma mark -
-@implementation BDBStyle
+@implementation BDBCategory
 
 - (id)initWithDictionary:(NSDictionary *)dictionary
 {
@@ -37,29 +37,15 @@
 
     @try
     {
-        _styleId            = dictionary[@"id"];
-        _category           = dictionary[NSStringFromSelector(@selector(category))];
-
-        _srmMax             = dictionary[NSStringFromSelector(@selector(srmMax))];
-        _ibuMax             = dictionary[NSStringFromSelector(@selector(ibuMax))];
-        _srmMin             = dictionary[NSStringFromSelector(@selector(srmMin))];
-        _descriptionString  = [dictionary[@"description"] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-        _fgMin              = dictionary[NSStringFromSelector(@selector(fgMin))];
-        _ibuMin             = dictionary[NSStringFromSelector(@selector(ibuMin))];
+        _categoryId         = dictionary[@"id"];
         _createDate         = dictionary[NSStringFromSelector(@selector(createDate))];
-        _fgMax              = dictionary[NSStringFromSelector(@selector(fgMax))];
-        _abvMax             = dictionary[NSStringFromSelector(@selector(abvMax))];
-        _ogMin              = dictionary[NSStringFromSelector(@selector(ogMin))];
-        _ogMax              = dictionary[NSStringFromSelector(@selector(ogMax))];
-        _abvMin             = dictionary[NSStringFromSelector(@selector(abvMin))];
         _name               = dictionary[NSStringFromSelector(@selector(name))];
-        _categoryId         = dictionary[NSStringFromSelector(@selector(categoryId))];
 
         _status             = dictionary[NSStringFromSelector(@selector(status))];
     }
     @catch (NSException *exception)
     {
-        NSLog(@"Could not parse style: %@", exception);
+        NSLog(@"Could not parse category: %@", exception);
         return nil;
     }
 

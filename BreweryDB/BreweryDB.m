@@ -96,7 +96,7 @@ NSString * const BreweryDBResponseCurrentPageKey    = @"currentPage";
 #pragma mark Beers
 + (void)fetchBeersWithParameters:(NSDictionary *)parameters
                  withBreweryInfo:(BOOL)withBreweryInfo
-                         success:(void (^)(NSArray *))success
+                         success:(void (^)(NSArray *, NSUInteger, NSUInteger))success
                          failure:(void (^)(NSError *))failure
 {
     NSParameterAssert(success);
@@ -134,7 +134,9 @@ NSString * const BreweryDBResponseCurrentPageKey    = @"currentPage";
                                                                     break;
                                                                 }
                                                             }
-                                                            success(beers);
+                                                            NSUInteger  numberOfPages   = [response[BreweryDBResponseNumberOfPagesKey] unsignedIntegerValue];
+                                                            NSUInteger  currentPage     = [response[BreweryDBResponseCurrentPageKey] unsignedIntegerValue];
+                                                            success(beers, currentPage, numberOfPages);
                                                         }
                                                         else
                                                             failure([[[self class] sharedInstance] errorWithCode:BDB_ERRNO_API_ERROR
@@ -199,7 +201,7 @@ NSString * const BreweryDBResponseCurrentPageKey    = @"currentPage";
 
 #pragma mark Breweries
 + (void)fetchBreweriesWithParameters:(NSDictionary *)parameters
-                             success:(void (^)(NSArray *))success
+                             success:(void (^)(NSArray *, NSUInteger, NSUInteger))success
                              failure:(void (^)(NSError *))failure
 {
     NSParameterAssert(success);
@@ -234,7 +236,9 @@ NSString * const BreweryDBResponseCurrentPageKey    = @"currentPage";
                                                                     break;
                                                                 }
                                                             }
-                                                            success(breweries);
+                                                            NSUInteger  numberOfPages   = [response[BreweryDBResponseNumberOfPagesKey] unsignedIntegerValue];
+                                                            NSUInteger  currentPage     = [response[BreweryDBResponseCurrentPageKey] unsignedIntegerValue];
+                                                            success(breweries, currentPage, numberOfPages);
                                                         }
                                                         else
                                                             failure([[[self class] sharedInstance] errorWithCode:BDB_ERRNO_API_ERROR
@@ -413,7 +417,7 @@ withBreweryInfo:(BOOL)withBreweryInfo
 
 #pragma mark Styles
 + (void)fetchStylesWithParameters:(NSDictionary *)parameters
-                          success:(void (^)(NSArray *))success
+                          success:(void (^)(NSArray *, NSUInteger, NSUInteger))success
                           failure:(void (^)(NSError *))failure
 {
     NSParameterAssert(success);
@@ -448,7 +452,9 @@ withBreweryInfo:(BOOL)withBreweryInfo
                                                                     break;
                                                                 }
                                                             }
-                                                            success(styles);
+                                                            NSUInteger  numberOfPages   = [response[BreweryDBResponseNumberOfPagesKey] unsignedIntegerValue];
+                                                            NSUInteger  currentPage     = [response[BreweryDBResponseCurrentPageKey] unsignedIntegerValue];
+                                                            success(styles, currentPage, numberOfPages);
                                                         }
                                                         else
                                                             failure([[[self class] sharedInstance] errorWithCode:BDB_ERRNO_API_ERROR
@@ -487,9 +493,107 @@ withBreweryInfo:(BOOL)withBreweryInfo
                                                         NSDictionary *response = responseObject;
                                                         if ([response[BreweryDBResponseStatusKey] isEqualToString:@"success"])
                                                         {
-                                                            BDBStyle *style = [[BDBBeer alloc] initWithDictionary:response[BreweryDBResponseDataKey]];
+                                                            BDBStyle *style = [[BDBStyle alloc] initWithDictionary:response[BreweryDBResponseDataKey]];
                                                             if (style)
                                                                 success(style);
+                                                            else
+                                                                failure([[[self class] sharedInstance] errorWithCode:BDB_ERRNO_BEER_OBJECT_CREATION_FAILED
+                                                                                                         description:BDB_ERROR_BEER_OBJECT_CREATION_FAILED]);
+                                                        }
+                                                        else
+                                                            failure([[[self class] sharedInstance] errorWithCode:BDB_ERRNO_API_ERROR
+                                                                                                     description:response[BreweryDBResponseErrorKey]]);
+                                                    }
+                                                    else
+                                                        failure([[[self class] sharedInstance] errorWithCode:BDB_ERRNO_BAD_API_RESPONSE
+                                                                                                 description:BDB_ERROR_BAD_API_RESPONSE]);
+                                                }
+                                                failure:^(NSURLSessionDataTask *task, NSError *error) {
+                                                    failure(error);
+                                                }];
+}
+
+#pragma mark Categories
++ (void)fetchCategoriesWithParameters:(NSDictionary *)parameters
+                              success:(void (^)(NSArray *, NSUInteger, NSUInteger))success
+                              failure:(void (^)(NSError *))failure
+{
+    NSParameterAssert(success);
+    NSParameterAssert(failure);
+    
+    if (![[[self class] sharedInstance] readyToBrew])
+        return failure([[[self class] sharedInstance] errorWithCode:BDB_ERRNO_MISSING_API_KEY description:BDB_ERROR_MISSING_API_KEY]);
+    
+    NSMutableDictionary *mutableParameters = parameters.mutableCopy;
+    if (!mutableParameters)
+        mutableParameters = [NSMutableDictionary dictionary];
+    mutableParameters[@"key"] = [[[self class] sharedInstance] apiKey];
+    
+    [[[[self class] sharedInstance] networkManager] GET:@"categories"
+                                             parameters:mutableParameters
+                                                success:^(NSURLSessionDataTask *task, id responseObject) {
+                                                    if ([responseObject isKindOfClass:[NSDictionary class]])
+                                                    {
+                                                        NSDictionary *response = responseObject;
+                                                        if ([response[BreweryDBResponseStatusKey] isEqualToString:@"success"])
+                                                        {
+                                                            NSMutableArray *categories = [NSMutableArray array];
+                                                            for (NSDictionary *dictionary in response[BreweryDBResponseDataKey])
+                                                            {
+                                                                BDBCategory *category = [[BDBCategory alloc] initWithDictionary:dictionary];
+                                                                if (category)
+                                                                    [categories addObject:category];
+                                                                else
+                                                                {
+                                                                    failure([[[self class] sharedInstance] errorWithCode:BDB_ERRNO_BEER_OBJECT_CREATION_FAILED
+                                                                                                             description:BDB_ERROR_BEER_OBJECT_CREATION_FAILED]);
+                                                                    break;
+                                                                }
+                                                            }
+                                                            NSUInteger  numberOfPages   = [response[BreweryDBResponseNumberOfPagesKey] unsignedIntegerValue];
+                                                            NSUInteger  currentPage     = [response[BreweryDBResponseCurrentPageKey] unsignedIntegerValue];
+                                                            success(categories, currentPage, numberOfPages);
+                                                        }
+                                                        else
+                                                            failure([[[self class] sharedInstance] errorWithCode:BDB_ERRNO_API_ERROR
+                                                                                                     description:response[BreweryDBResponseErrorKey]]);
+                                                    }
+                                                    else
+                                                        failure([[[self class] sharedInstance] errorWithCode:BDB_ERRNO_BAD_API_RESPONSE
+                                                                                                 description:BDB_ERROR_BAD_API_RESPONSE]);
+                                                }
+                                                failure:^(NSURLSessionDataTask *task, NSError *error) {
+                                                    failure(error);
+                                                }];
+}
+
++ (void)fetchCategoryWithId:(NSString *)categoryId
+                 parameters:(NSDictionary *)parameters
+                    success:(void (^)(BDBBeer *))success
+                    failure:(void (^)(NSError *))failure
+{
+    NSParameterAssert(success);
+    NSParameterAssert(failure);
+    
+    if (![[[self class] sharedInstance] readyToBrew])
+        return failure([[[self class] sharedInstance] errorWithCode:BDB_ERRNO_MISSING_API_KEY description:BDB_ERROR_MISSING_API_KEY]);
+    
+    NSMutableDictionary *mutableParameters = parameters.mutableCopy;
+    if (!mutableParameters)
+        mutableParameters = [NSMutableDictionary dictionary];
+    mutableParameters[@"key"] = [[[self class] sharedInstance] apiKey];
+    
+    [[[[self class] sharedInstance] networkManager] GET:[@"category" stringByAppendingFormat:@"/%@", categoryId]
+                                             parameters:mutableParameters
+                                                success:^(NSURLSessionDataTask *task, id responseObject) {
+                                                    if ([responseObject isKindOfClass:[NSDictionary class]])
+                                                    {
+                                                        NSDictionary *response = responseObject;
+                                                        if ([response[BreweryDBResponseStatusKey] isEqualToString:@"success"])
+                                                        {
+                                                            BDBCategory *category = [[BDBCategory alloc] initWithDictionary:response[BreweryDBResponseDataKey]];
+                                                            if (category)
+                                                                success(category);
                                                             else
                                                                 failure([[[self class] sharedInstance] errorWithCode:BDB_ERRNO_BEER_OBJECT_CREATION_FAILED
                                                                                                          description:BDB_ERROR_BEER_OBJECT_CREATION_FAILED]);

@@ -26,6 +26,7 @@
 #import "BDBBrewery.h"
 #import "BDBGuild.h"
 #import "BDBStyle.h"
+#import "BDBCategory.h"
 
 
 typedef NS_ENUM(NSInteger, BreweryDBSearchType)
@@ -65,7 +66,7 @@ typedef NS_ENUM(NSInteger, BreweryDBSearchType)
  */
 + (void)fetchBeersWithParameters:(NSDictionary *)parameters
                  withBreweryInfo:(BOOL)withBreweryInfo
-                         success:(void (^)(NSArray *beers))success
+                         success:(void (^)(NSArray *beers, NSUInteger currentPage, NSUInteger numberOfPages))success
                          failure:(void (^)(NSError *error))failure;
 
 /**
@@ -95,7 +96,7 @@ typedef NS_ENUM(NSInteger, BreweryDBSearchType)
  *  @since 1.0.0
  */
 + (void)fetchBreweriesWithParameters:(NSDictionary *)parameters
-                             success:(void (^)(NSArray *breweries))success
+                             success:(void (^)(NSArray *breweries, NSUInteger currentPage, NSUInteger numberOfPages))success
                              failure:(void (^)(NSError *error))failure;
 
 /**
@@ -143,7 +144,7 @@ withBreweryInfo:(BOOL)withBreweryInfo
  *  @since 1.0.0
  */
 + (void)fetchStylesWithParameters:(NSDictionary *)parameters
-                          success:(void (^)(NSArray *beers))success
+                          success:(void (^)(NSArray *style, NSUInteger currentPage, NSUInteger numberOfPages))success
                           failure:(void (^)(NSError *error))failure;
 
 /**
@@ -158,7 +159,36 @@ withBreweryInfo:(BOOL)withBreweryInfo
  */
 + (void)fetchStyleWithId:(NSString *)styleId
               parameters:(NSDictionary *)parameters
-                 success:(void (^)(BDBBeer *beer))success
+                 success:(void (^)(BDBStyle *style))success
                  failure:(void (^)(NSError *error))failure;
+
+#pragma mark Categories
+/**
+ *  Fetch an array of categories pertaining to the specified parameters.
+ *
+ *  @param parameters Filtering paramaters.
+ *  @param success    Callback function performed on successful retrieval of results.
+ *  @param failure    Callback function performed when an error occurs.
+ *
+ *  @since 1.0.0
+ */
++ (void)fetchCategoriesWithParameters:(NSDictionary *)parameters
+                              success:(void (^)(NSArray *categories, NSUInteger currentPage, NSUInteger numberOfPages))success
+                              failure:(void (^)(NSError *error))failure;
+
+/**
+ *  Fetch a single category object specified by the styleId.
+ *
+ *  @param styleId    Unique ID describing the beer.
+ *  @param parameters Filtering parameters.
+ *  @param success    Callback function performed on successful retrieval of results.
+ *  @param failure    Callback function performed when an error occurs.
+ *
+ *  @since 1.0.0
+ */
++ (void)fetchCategoryWithId:(NSString *)categoryId
+                 parameters:(NSDictionary *)parameters
+                    success:(void (^)(BDBCategory *category))success
+                    failure:(void (^)(NSError *error))failure;
 
 @end
