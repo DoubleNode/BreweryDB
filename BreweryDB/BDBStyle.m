@@ -21,7 +21,7 @@
 //  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #import "BDBStyle.h"
-
+#import "BDBCategory.h"
 
 #pragma mark -
 @implementation BDBStyle
@@ -38,7 +38,9 @@
     @try
     {
         _styleId            = dictionary[@"id"];
-        _category           = dictionary[NSStringFromSelector(@selector(category))];
+        
+        NSDictionary* categoryDictionary = dictionary[NSStringFromSelector(@selector(category))];
+        _category = [[BDBCategory alloc] initWithDictionary:categoryDictionary];
 
         _srmMax             = dictionary[NSStringFromSelector(@selector(srmMax))];
         _ibuMax             = dictionary[NSStringFromSelector(@selector(ibuMax))];
