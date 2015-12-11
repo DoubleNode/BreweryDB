@@ -220,7 +220,7 @@ withBreweryInfo:(BOOL)withBreweryInfo
  *
  *  @since 1.0.0
  */
-+ (void)fetchFermentablesForBeerId:(NSString* *)beerId
++ (void)fetchFermentablesForBeerId:(NSString *)beerId
                     withParameters:(NSDictionary *)parameters
                            success:(void (^)(NSArray *fermentables, NSUInteger currentPage, NSUInteger numberOfPages))success
                            failure:(void (^)(NSError *error))failure;
@@ -263,7 +263,7 @@ withBreweryInfo:(BOOL)withBreweryInfo
  *
  *  @since 1.0.0
  */
-+ (void)fetchHopsForBeerId:(NSString* *)beerId
++ (void)fetchHopsForBeerId:(NSString *)beerId
             withParameters:(NSDictionary *)parameters
                    success:(void (^)(NSArray *hops, NSUInteger currentPage, NSUInteger numberOfPages))success
                    failure:(void (^)(NSError *error))failure;
@@ -306,7 +306,7 @@ withBreweryInfo:(BOOL)withBreweryInfo
  *
  *  @since 1.0.0
  */
-+ (void)fetchYeastsForBeerId:(NSString* *)beerId
++ (void)fetchYeastsForBeerId:(NSString *)beerId
               withParameters:(NSDictionary *)parameters
                      success:(void (^)(NSArray *yeast, NSUInteger currentPage, NSUInteger numberOfPages))success
                      failure:(void (^)(NSError *error))failure;
