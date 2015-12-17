@@ -14,5 +14,5 @@ Pod::Spec.new do |s|
   s.source_files        = 'BreweryDB/*.{h,m}'  
   s.public_header_files = 'BreweryDB/*.h'
   
-  s.dependency 'AFNetworking', '~> 2.6.0'
+  s.dependency 'AFNetworking', '~> 3.0'
 end
