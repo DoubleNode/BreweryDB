@@ -22,12 +22,13 @@
 
 #import <Foundation/Foundation.h>
 
+@class BDBCategory;
 
 #pragma mark -
 @interface BDBStyle : NSObject
 
 @property (nonatomic, copy, readonly) NSString *styleId;
-@property (nonatomic) NSDictionary *category;
+@property (nonatomic) BDBCategory *category;
 @property (nonatomic) NSNumber *srmMax;
 @property (nonatomic) NSNumber *ibuMax;
 @property (nonatomic) NSNumber *srmMin;
@@ -38,6 +39,7 @@
 @property (nonatomic) NSNumber *fgMax;
 @property (nonatomic) NSNumber *abvMax;
 @property (nonatomic) NSNumber *ogMin;
+@property (nonatomic) NSNumber *ogMax;
 @property (nonatomic) NSNumber *abvMin;
 @property (nonatomic, copy) NSString *name;
 @property (nonatomic) NSNumber *categoryId;

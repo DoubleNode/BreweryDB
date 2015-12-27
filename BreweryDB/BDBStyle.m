@@ -21,7 +21,7 @@
 //  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #import "BDBStyle.h"
-
+#import "BDBCategory.h"
 
 #pragma mark -
 @implementation BDBStyle
@@ -37,8 +37,10 @@
 
     @try
     {
-        _styleId            = dictionary[NSStringFromSelector(@selector(styleId))];
-        _category           = dictionary[NSStringFromSelector(@selector(category))];
+        _styleId            = dictionary[@"id"];
+        
+        NSDictionary* categoryDictionary = dictionary[NSStringFromSelector(@selector(category))];
+        _category = [[BDBCategory alloc] initWithDictionary:categoryDictionary];
 
         _srmMax             = dictionary[NSStringFromSelector(@selector(srmMax))];
         _ibuMax             = dictionary[NSStringFromSelector(@selector(ibuMax))];
@@ -50,6 +52,7 @@
         _fgMax              = dictionary[NSStringFromSelector(@selector(fgMax))];
         _abvMax             = dictionary[NSStringFromSelector(@selector(abvMax))];
         _ogMin              = dictionary[NSStringFromSelector(@selector(ogMin))];
+        _ogMax              = dictionary[NSStringFromSelector(@selector(ogMax))];
         _abvMin             = dictionary[NSStringFromSelector(@selector(abvMin))];
         _name               = dictionary[NSStringFromSelector(@selector(name))];
         _categoryId         = dictionary[NSStringFromSelector(@selector(categoryId))];
@@ -58,7 +61,7 @@
     }
     @catch (NSException *exception)
     {
-        NSLog(@"Could not parse beer: %@", exception);
+        NSLog(@"Could not parse style: %@", exception);
         return nil;
     }
 
