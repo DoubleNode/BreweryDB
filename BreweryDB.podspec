@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name      = 'BreweryDB'
-  s.version   = '0.1.10'
+  s.version   = '0.1.11'
   s.license   = 'MIT'
   s.summary   = 'iOS and OS X SDK for BreweryDB'
   s.homepage  = 'https://github.com/bdbergeron/BreweryDB'
