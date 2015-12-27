@@ -22,6 +22,7 @@
 
 #import <Foundation/Foundation.h>
 
+@class BDBStyle;
 
 #pragma mark -
 @interface BDBBeer : NSObject
@@ -37,7 +38,7 @@
 @property (nonatomic) NSNumber *glasswareId;
 @property (nonatomic) NSDictionary *glass;
 @property (nonatomic) NSNumber *styleId;
-@property (nonatomic) NSDictionary *style;
+@property (nonatomic) BDBStyle *style;
 @property (nonatomic, assign, getter = isOrganic) BOOL organic;
 @property (nonatomic) NSDictionary *labels;
 @property (nonatomic) NSNumber *servingTemperature;
