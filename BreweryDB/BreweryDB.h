@@ -27,6 +27,7 @@
 #import "BDBGuild.h"
 #import "BDBStyle.h"
 #import "BDBCategory.h"
+#import "BDBLocation.h"
 #import "BDBFermentable.h"
 #import "BDBHop.h"
 #import "BDBYeast.h"
@@ -42,6 +43,7 @@ typedef NS_ENUM(NSInteger, BreweryDBSearchType)
     BreweryDBSearchTypeFermentable,
     BreweryDBSearchTypeHop,
     BreweryDBSearchTypeYeast,
+    BreweryDBSearchTypeLocation,
 };
 
 
@@ -294,7 +296,7 @@ withBreweryInfo:(BOOL)withBreweryInfo
  *  @since 1.0.0
  */
 + (void)fetchYeastsWithParameters:(NSDictionary *)parameters
-                          success:(void (^)(NSArray *yeast, NSUInteger currentPage, NSUInteger numberOfPages))success
+                          success:(void (^)(NSArray *yeasts, NSUInteger currentPage, NSUInteger numberOfPages))success
                           failure:(void (^)(NSError *error))failure;
 
 /**
@@ -308,7 +310,7 @@ withBreweryInfo:(BOOL)withBreweryInfo
  */
 + (void)fetchYeastsForBeerId:(NSString *)beerId
               withParameters:(NSDictionary *)parameters
-                     success:(void (^)(NSArray *yeast, NSUInteger currentPage, NSUInteger numberOfPages))success
+                     success:(void (^)(NSArray *yeasts, NSUInteger currentPage, NSUInteger numberOfPages))success
                      failure:(void (^)(NSError *error))failure;
 
 /**
@@ -325,5 +327,48 @@ withBreweryInfo:(BOOL)withBreweryInfo
               parameters:(NSDictionary *)parameters
                  success:(void (^)(BDBYeast *yeast))success
                  failure:(void (^)(NSError *error))failure;
+
+#pragma mark Locations
+/**
+ *  Fetch an array of locations pertaining to the specified parameters.
+ *
+ *  @param parameters Filtering paramaters.
+ *  @param success    Callback function performed on successful retrieval of results.
+ *  @param failure    Callback function performed when an error occurs.
+ *
+ *  @since 1.0.0
+ */
++ (void)fetchLocationsWithParameters:(NSDictionary *)parameters
+                             success:(void (^)(NSArray *locations, NSUInteger currentPage, NSUInteger numberOfPages))success
+                             failure:(void (^)(NSError *error))failure;
+
+/**
+ *  Fetch an array of locations for a specific brewery pertaining to the specified parameters.
+ *
+ *  @param parameters Filtering paramaters.
+ *  @param success    Callback function performed on successful retrieval of results.
+ *  @param failure    Callback function performed when an error occurs.
+ *
+ *  @since 1.0.0
+ */
++ (void)fetchLocationsForBreweryId:(NSString *)breweryId
+                    withParameters:(NSDictionary *)parameters
+                           success:(void (^)(NSArray *locations, NSUInteger currentPage, NSUInteger numberOfPages))success
+                           failure:(void (^)(NSError *error))failure;
+
+/**
+ *  Fetch a single location object specified by the locationId.
+ *
+ *  @param yeastId    Unique ID describing the location.
+ *  @param parameters Filtering parameters.
+ *  @param success    Callback function performed on successful retrieval of results.
+ *  @param failure    Callback function performed when an error occurs.
+ *
+ *  @since 1.0.0
+ */
++ (void)fetchLocationWithId:(NSString *)locationId
+                 parameters:(NSDictionary *)parameters
+                    success:(void (^)(BDBLocation *location))success
+                    failure:(void (^)(NSError *error))failure;
 
 @end
