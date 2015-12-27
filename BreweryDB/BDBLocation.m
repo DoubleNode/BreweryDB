@@ -42,8 +42,8 @@
 
         _streetAddress = dictionary[NSStringFromSelector(@selector(streetAddress))];
         _extendedAddress = dictionary[NSStringFromSelector(@selector(extendedAddress))];
-        _city = dictionary[NSStringFromSelector(@selector(city))];
-        _state = dictionary[NSStringFromSelector(@selector(state))];
+        _locality = dictionary[NSStringFromSelector(@selector(locality))];
+        _region = dictionary[NSStringFromSelector(@selector(region))];
         _postalCode = dictionary[NSStringFromSelector(@selector(postalCode))];
         _phone = dictionary[NSStringFromSelector(@selector(phone))];
         _website = dictionary[NSStringFromSelector(@selector(website))];
@@ -62,7 +62,7 @@
         _primary = [dictionary[NSStringFromSelector(@selector(isPrimary))] boolValue];
         _planning = [dictionary[NSStringFromSelector(@selector(inPlanning))] boolValue];
         _closed = [dictionary[NSStringFromSelector(@selector(isClosed))] boolValue];
-        _openToPublic = [dictionary[NSStringFromSelector(@selector(isOpenToPublic))] boolValue];
+        _openToPublic = [dictionary[NSStringFromSelector(@selector(openToPublic))] boolValue];
         
         _locationType = dictionary[NSStringFromSelector(@selector(locationType))];
         _locationTypeDisplay = dictionary[NSStringFromSelector(@selector(locationTypeDisplay))];
@@ -70,6 +70,7 @@
         
         _country = dictionary[NSStringFromSelector(@selector(country))];
         _yearOpened = dictionary[NSStringFromSelector(@selector(yearOpened))];
+        _yearClosed = dictionary[NSStringFromSelector(@selector(yearClosed))];
 
         _status = dictionary[NSStringFromSelector(@selector(status))];
     }
