@@ -32,8 +32,8 @@
 
 @property (nonatomic, copy) NSString *streetAddress;
 @property (nonatomic, copy) NSString *extendedAddress;
-@property (nonatomic, copy) NSString *city;
-@property (nonatomic, copy) NSString *state;
+@property (nonatomic, copy) NSString *locality;
+@property (nonatomic, copy) NSString *region;
 @property (nonatomic, copy) NSString *postalCode;
 @property (nonatomic, copy) NSString *phone;
 @property (nonatomic, copy) NSString *website;
@@ -60,6 +60,7 @@
 @property (nonatomic, copy) NSDictionary *country;
 
 @property (nonatomic)       NSNumber *yearOpened;
+@property (nonatomic)       NSNumber *yearClosed;
 
 @property (nonatomic, copy, readonly) NSString *status;
 
