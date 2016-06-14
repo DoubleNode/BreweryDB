@@ -34,6 +34,7 @@
 @property (nonatomic, copy) NSString *mailingListURL;
 @property (nonatomic, assign, getter = isOrganic) BOOL organic;
 @property (nonatomic) NSDictionary *images;
+@property (nonatomic) NSArray *locations;
 
 @property (nonatomic, copy, readonly) NSString *status;
 

@@ -21,6 +21,7 @@
 //  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #import "BDBBrewery.h"
+#import "BDBLocation.h"
 
 
 #pragma mark -
@@ -45,6 +46,17 @@
         _mailingListURL = dictionary[NSStringFromSelector(@selector(mailingListURL))];
         _organic = [dictionary[NSStringFromSelector(@selector(isOrganic))] boolValue];
         _images = dictionary[NSStringFromSelector(@selector(images))];
+
+        NSMutableArray *mutableLocations = [NSMutableArray array];
+        for (NSDictionary *locationDictionary in dictionary[NSStringFromSelector(@selector(locations))])
+        {
+            BDBLocation *location = [[BDBLocation alloc] initWithDictionary:locationDictionary];
+            if (location)
+                [mutableLocations addObject:location];
+            else
+                NSLog(@"Could not parse location: %@", location);
+        }
+        _locations = mutableLocations;
 
         _status = dictionary[NSStringFromSelector(@selector(status))];
     }

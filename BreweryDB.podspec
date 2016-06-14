@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name      = 'BreweryDB'
-  s.version   = '0.1.7'
+  s.version   = '0.1.12'
   s.license   = 'MIT'
   s.summary   = 'iOS and OS X SDK for BreweryDB'
   s.homepage  = 'https://github.com/bdbergeron/BreweryDB'
@@ -14,5 +14,7 @@ Pod::Spec.new do |s|
   s.source_files        = 'BreweryDB/*.{h,m}'  
   s.public_header_files = 'BreweryDB/*.h'
   
-  s.dependency 'AFNetworking', '~> 2.6.0'
+  s.vendored_frameworks = ['Pod/Frameworks/AFNetworking.framework']
+  
+  s.dependency 'AFNetworking', '~> 3.0'
 end
